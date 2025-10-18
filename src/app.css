@@ -1,0 +1,17 @@
+@import 'tailwindcss';
+@import '@skeletonlabs/skeleton';
+@import '@skeletonlabs/skeleton-svelte';
+@import '@skeletonlabs/skeleton/themes/cerberus';
+@import '../theme.css';
+
+@plugin '@tailwindcss/typography';
+
+html,
+body {
+	@apply h-full;
+}
+
+.btn {
+	padding: 16px 28px 16px 32px;
+	@apply rounded-full;
+}
