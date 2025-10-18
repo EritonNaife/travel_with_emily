@@ -45,32 +45,22 @@
 	];
 </script>
 
-<section id="Hero-section" class="relative h-screen overflow-hidden">
-	<!-- Background Video -->
-	<video
-		class="absolute top-0 left-0 -z-10 h-full w-full object-cover"
-		src="/vids/hero-vid.mp4"
-		autoplay
-		muted
-		loop
-		playsinline
-	></video>
-
-	<!-- Overlay -->
-	<div class="absolute inset-0 z-0 bg-primary-900/30"></div>
-
-	<!-- Hero Content -->
-	<div class="relative z-10 flex h-screen flex-col justify-center space-y-4 px-8 py-4 text-center">
-		<h1 class="h1 font-bold text-surface-50 md:text-7xl">Escape to Paradise</h1>
-
-		<p class="md:text-md mx-auto text-xs font-bold md:w-xl">
-			Ignite your Wanderlust and unlock a world of possibilities. From serene Beaches to bustling
-			Cities, we offer a diverse range of travel packages to suit every taste and budget.
-		</p>
-
-		<div class="mt-10 flex justify-center gap-4">
-			<a href="#" class="btn preset-filled-primary-500">Book a Tour</a>
-			<a href="#" class="btn preset-filled-surface-500">Learn More</a>
+<section id="Hero-section">
+	<div
+		class="relative flex h-screen flex-col justify-center bg-cover bg-center text-center"
+		style="background-image: url(/images/hero-section.png);"
+	>
+		<div class="absolute inset-0 bg-primary-900/40"></div>
+		<div class="absolute right-0 bottom-65 left-0 space-y-4 px-8 py-4">
+			<h1 class="h1 font-bold text-surface-50 md:text-7xl">Escape to Paradise</h1>
+			<p class="md:text-md mx-auto text-xs font-bold md:w-xl">
+				Ignite your Wanderlust and unlock a world of possibilities. From serene Beaches to bustling
+				Cities, we offer a diverse range of travel packages to suit every taste and budget.
+			</p>
+			<div class="mt-10 flex justify-center gap-4">
+				<a href="#" class="btn preset-filled-primary-500"> Book a Tour</a>
+				<a href="" class="btn preset-filled-surface-500">Learn More</a>
+			</div>
 		</div>
 	</div>
 </section>

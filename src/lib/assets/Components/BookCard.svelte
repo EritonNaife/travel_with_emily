@@ -6,7 +6,7 @@
 </script>
 
 <form
-	class="relative mx-auto mt-10 h-[70vh] w-md rounded-lg bg-white px-6 py-4 text-left text-surface-950 shadow-lg"
+	class="relative mx-auto mt-10 w-md rounded-lg bg-white px-6 py-4 text-left text-surface-950 shadow-lg"
 >
 	<div class="mb-4 flex items-center justify-between text-sm">
 		<h2 class="font-bold text-primary-600">Book Your Trip</h2>
@@ -33,7 +33,7 @@
 		<input
 			class="focus:ountline-1 input rounded-xl border-secondary-400 text-primary-900 placeholder:text-sm placeholder:text-secondary-800 focus:outline-primary-500"
 			type="email"
-			placeholder="Input"
+			placeholder="mail@email.com"
 		/>
 	</label>
 
@@ -42,7 +42,7 @@
 		<input
 			class="focus:ountline-1 input rounded-xl border-secondary-400 text-primary-900 placeholder:text-sm placeholder:text-secondary-800 focus:outline-primary-500"
 			type="phone"
-			placeholder="Input"
+			placeholder="(351) 999 999 999"
 		/>
 	</label>
 
@@ -60,8 +60,16 @@
 		<input
 			class="focus:ountline-1 input rounded-xl border-secondary-400 text-primary-900 placeholder:text-sm placeholder:text-secondary-800 focus:outline-primary-500"
 			type="number"
-			placeholder="Input"
+			placeholder="2"
 		/>
+	</label>
+
+	<label class="label mb-4">
+		<span class="label-text font-bold text-primary-600">Type of Payment</span>
+		<select class="select text-secondary-800 focus:outline-primary-500">
+			<option value="1">Full</option>
+			<option value="2">Partial</option>
+		</select>
 	</label>
 
 	<button type="button" class="btn w-full preset-filled-primary-500 hover:bg-tertiary-600"

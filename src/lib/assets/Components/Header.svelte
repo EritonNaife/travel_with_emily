@@ -19,11 +19,12 @@
 		</AppBar.Headline>
 
 		<AppBar.Lead>
-			<nav class="hidden h4 xl:flex">
+			<nav class="hidden xl:flex">
 				{#each links as link}
 					<a
 						href={link.href}
-						class="btn text-primary-900/70 hover:font-bold hover:text-tertiary-400">{link.name}</a
+						class="btn text-lg font-medium text-primary-900/70 hover:text-tertiary-400"
+						>{link.name}</a
 					>
 				{/each}
 			</nav>
