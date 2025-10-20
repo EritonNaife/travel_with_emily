@@ -2,12 +2,12 @@
 	import { browser } from '$app/environment';
 	import BookCard from '$lib/assets/Components/BookCard.svelte';
 	import { onMount } from 'svelte';
-	import { scale } from 'svelte/transition';
+	import { quintOut } from 'svelte/easing';
+	import { fly, scale } from 'svelte/transition';
 
 	export let imageSrc: string;
 	export let title: string;
-	export let description: string;
-	export let linkHref: string;
+
 	export let days: number;
 	export let price: number;
 
@@ -37,6 +37,7 @@
 
 <div
 	class="h-130 w-full overflow-hidden card rounded-3xl shadow-lg transition-transform md:w-[48vw] md:rotate-5 lg:w-[30vw]"
+	in:fly={{ y: 50, duration: 800, delay: 6000, easing: quintOut }}
 >
 	<header class="relative h-full">
 		<img src={imageSrc} alt={title} class="h-full w-full object-cover" />

@@ -15,7 +15,7 @@
 >
 	<AppBar.Toolbar class="flex items-center justify-between md:px-4">
 		<AppBar.Headline>
-			<a href="" class="h4 text-primary-500">TravelWithEmily</a>
+			<a href="/" class="h4 text-primary-500">TravelWithEmily</a>
 		</AppBar.Headline>
 
 		<AppBar.Lead>
