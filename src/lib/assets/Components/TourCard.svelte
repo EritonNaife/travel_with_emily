@@ -6,7 +6,8 @@
 	export let description: string;
 	export let imageSrc: string;
 	export let linkHref: string;
-	import { scale } from 'svelte/transition';
+	import { fly, scale } from 'svelte/transition';
+	import { quartOut } from 'svelte/easing';
 
 	let showInquiryCard: boolean = false;
 
@@ -34,6 +35,12 @@
 </script>
 
 <div
+	in:fly={{
+		y: 100,
+		duration: 800,
+		delay: 600,
+		easing: quartOut
+	}}
 	class="group block max-w-md overflow-hidden rounded-xl bg-surface-50 shadow-lg shadow-primary-500/10 transition-all duration-300 ease-in-out hover:scale-[1.03] hover:shadow-xl"
 >
 	<header class="relative overflow-hidden">

@@ -87,14 +87,14 @@
 <section
 	id="Packages-section"
 	class="w-full bg-surface-100 bg-white py-10 md:py-16"
-	use:inview={{ threshold: 0.4, unobserveOnEnter: true }}
+	use:inview={{ threshold: 0.2, unobserveOnEnter: true }}
 	oninview_change={handlePackagesInview}
 >
 	{#if isPackagesInView}
 		<div class="mx-auto grid w-full max-w-[90vw] grid-cols-1 gap-5 md:grid-cols-2">
 			<div
 				class="mb-10 text-center md:flex md:items-end md:text-left"
-				in:fly={{ x: -50, duration: 1000, easing: quintOut, delay: 400 }}
+				in:fly={{ x: -50, duration: 1000, easing: quintOut, delay: 1000 }}
 			>
 				<div class="space-y-5">
 					<h2 class="h2 text-surface-900 lg:text-6xl">
@@ -110,7 +110,7 @@
 			<div class="container-1">
 				<div
 					class="h-130 w-full overflow-hidden card rounded-3xl shadow-lg transition-transform md:w-[48vw] md:rotate-5 lg:w-[30vw]"
-					in:fly={{ x: 100, duration: 1000, delay: 800, easing: quintOut }}
+					in:fly={{ x: 100, duration: 1000, delay: 2000, easing: quintOut }}
 				>
 					<header class="relative h-full">
 						<img src={pkg[0].image_url} alt={pkg[0].name} class="h-full w-full object-cover" />
@@ -140,7 +140,7 @@
 			<div class="container-2 flex justify-end">
 				<div
 					class="relative h-130 w-full overflow-hidden card rounded-3xl shadow-lg transition-transform md:left-80 md:w-[48vw] md:rotate-5 lg:w-[30vw]"
-					in:fly={{ x: 100, duration: 1000, delay: 1600, easing: quintOut }}
+					in:fly={{ x: 100, duration: 1000, delay: 2500, easing: quintOut }}
 				>
 					<header class="relative h-full">
 						<img src={pkg[1].image_url} alt={pkg[1].name} class="h-full w-full object-cover" />
@@ -191,17 +191,17 @@
 				</p>
 			</div>
 
-			<div class="mt-8 flex flex-col gap-10 md:flex-row md:gap-10 lg:justify-center">
+			<div
+				class="mt-8 flex flex-col gap-10 md:flex-row md:gap-10 lg:justify-center"
+				in:fly={{
+					y: 100,
+					duration: 800,
+					delay: 800,
+					easing: quartOut
+				}}
+			>
 				{#each tours as tour, i}
-					<div
-						class="transition-transform duration-300 hover:scale-105"
-						in:fly={{
-							y: 100,
-							duration: 800,
-							delay: 600 + i * 200,
-							easing: quartOut
-						}}
-					>
+					<div class="">
 						<TourCard
 							title={tour.title}
 							description={tour.description}
@@ -224,7 +224,7 @@
 	{#if isCtaInView}
 		<div
 			class="relative mx-auto max-w-5xl overflow-hidden rounded-3xl bg-cover bg-center text-center shadow-2xl md:h-[50vh]"
-			in:fade={{ duration: 800, delay: 200 }}
+			in:fly={{ y: 100, duration: 1000, delay: 200, easing: quartOut }}
 		>
 			<div
 				class="absolute inset-0 bg-cover bg-center transition-transform duration-[8000ms] ease-in-out hover:scale-110"
@@ -235,17 +235,18 @@
 			></div>
 			<div
 				class="relative z-10 flex flex-col items-center space-y-6 p-8 text-surface-50 sm:p-12 md:top-20 lg:p-16"
-				in:scale={{ start: 1.02, duration: 1000, delay: 400, easing: quartOut }}
 			>
-				<h2 class="h2">Are You Ready to Travel</h2>
-				<p>
+				<h2 class="h2" in:fly={{ y: 100, duration: 1000, delay: 800, easing: quartOut }}>
+					Are You Ready to Travel
+				</h2>
+				<p in:fly={{ y: 100, duration: 1000, delay: 1600, easing: quartOut }}>
 					Don't wait any longer. Start planning your trip today. Contact us to discuss your travel
 					needs and let us handle the details
 				</p>
 				<a
+					in:fly={{ y: 100, duration: 1000, delay: 3200, easing: quartOut }}
 					href="/"
-					class="animate-pulse-slow btn preset-filled-primary-500 text-surface-50 transition-transform hover:scale-110"
-					>Join Us</a
+					class="btn preset-filled-primary-500 text-surface-50">Join Us</a
 				>
 			</div>
 		</div>
