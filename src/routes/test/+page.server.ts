@@ -3,7 +3,6 @@ import { supabase } from '$lib/supabaseClient';
 
 export const load: PageServerLoad = async () => {
 	const { data, error } = await supabase.from('packages').select('*');
-	console.log(data);
 
 	if (error) {
 		console.error('Error Loading Packages', error.message);

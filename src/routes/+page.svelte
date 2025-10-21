@@ -4,31 +4,16 @@
 	import { fade, fly, scale, slide } from 'svelte/transition';
 	import PackageCard from '$lib/assets/Components/PackageCard.svelte';
 	import { quartOut, quintOut } from 'svelte/easing';
+	import type { ActionData } from './$types.js';
 
-	let { data } = $props();
+	let { data, form } = $props();
 
 	let isPackagesInView = $state(false);
 	let isTourInView = $state(false);
 	let isCtaInView = $state(false);
 
-	let pkg = data.package;
-
-	const tours = [
-		{
-			title: 'Private Yacht Cruise',
-			description:
-				'Sail along the coastline on a luxurious private yacht. Enjoy breathtaking views and personalized service.',
-			imageSrc: '/images/tours/boat_tour.png',
-			linkHref: '/tours/yacht-cruise'
-		},
-		{
-			title: 'Scenic Helicopter Tour',
-			description:
-				"Get a bird's-eye view of the city and its surroundings with an exclusive helicopter tour.",
-			imageSrc: '/images/tours/heli_tour.png',
-			linkHref: '/tours/helicopter-tour'
-		}
-	];
+	let pkg = data.packageData;
+	let tourData = data.tourData;
 
 	const handlePackagesInview = (event: CustomEvent) => {
 		isPackagesInView = event.detail.inView as boolean;
@@ -173,7 +158,7 @@
 <section
 	id="Tour-section"
 	class="overflow-x-hidden bg-surface-200 py-10"
-	use:inview={{ threshold: 0, unobserveOnEnter: true }}
+	use:inview={{ threshold: 0.4, unobserveOnEnter: true }}
 	oninview_change={handleTourInview}
 >
 	{#if isTourInView}
@@ -200,13 +185,14 @@
 					easing: quartOut
 				}}
 			>
-				{#each tours as tour, i}
+				{#each tourData as tour}
 					<div class="">
 						<TourCard
+							{form}
+							tour_id={tour.id}
 							title={tour.title}
 							description={tour.description}
-							imageSrc={tour.imageSrc}
-							linkHref={tour.linkHref}
+							imageSrc={tour.image_url}
 						/>
 					</div>
 				{/each}
