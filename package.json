@@ -39,6 +39,8 @@
 		"vitest-browser-svelte": "^1.1.0"
 	},
 	"dependencies": {
-		"@supabase/supabase-js": "^2.75.1"
+		"@supabase/supabase-js": "^2.75.1",
+		"resend": "^6.2.1",
+		"svelte-inview": "^4.0.4"
 	}
 }

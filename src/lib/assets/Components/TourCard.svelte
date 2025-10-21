@@ -2,13 +2,15 @@
 	import InquiryCard from '$lib/assets/Components/InquiryCard.svelte';
 	import { onMount } from 'svelte';
 	import { browser } from '$app/environment';
+	export let tour_id: number;
 	export let title: string;
 	export let description: string;
 	export let imageSrc: string;
-	export let linkHref: string;
-	import { scale } from 'svelte/transition';
+	import { fly, scale } from 'svelte/transition';
+	import { quartOut } from 'svelte/easing';
 
 	let showInquiryCard: boolean = false;
+	export let form;
 
 	function toggleInquiryCard() {
 		showInquiryCard = !showInquiryCard;
@@ -34,6 +36,12 @@
 </script>
 
 <div
+	in:fly={{
+		y: 100,
+		duration: 800,
+		delay: 600,
+		easing: quartOut
+	}}
 	class="group block max-w-md overflow-hidden rounded-xl bg-surface-50 shadow-lg shadow-primary-500/10 transition-all duration-300 ease-in-out hover:scale-[1.03] hover:shadow-xl"
 >
 	<header class="relative overflow-hidden">
@@ -72,7 +80,7 @@
 
 		<!-- Modal Content -->
 		<div class="" in:scale={{ duration: 600, delay: 100 }} out:scale={{ duration: 500 }}>
-			<InquiryCard {title} show={toggleInquiryCard} />
+			<InquiryCard {form} {tour_id} {title} show={toggleInquiryCard} />
 		</div>
 	</div>
 {/if}
