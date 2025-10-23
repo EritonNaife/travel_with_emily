@@ -3,7 +3,10 @@ import type { PageServerLoad, Actions } from './$types';
 import { supabase } from '$lib/supabaseClient';
 import { error, fail } from '@sveltejs/kit';
 import { tourInquiryEmail } from '$lib/email/templates';
-import { resend } from '$lib/email/resend';
+import { Resend } from 'resend';
+import { RESEND_API_KEY } from '$env/static/private';
+
+export const resend = new Resend(RESEND_API_KEY);
 
 export const load: PageServerLoad = async () => {
 	const [tourRes, packagesRes] = await Promise.all([
@@ -38,7 +41,7 @@ export const actions: Actions = {
 			return fail(400, { error: 'Invalid Portuguese phone number.' });
 		}
 
-		console.log('📩 Received inquiry:', {
+		console.log('📩 Received inquiry', {
 			name,
 			email,
 			phone_number,
@@ -49,19 +52,7 @@ export const actions: Actions = {
 
 		// --- Optional: store inquiry in Supabase ---
 		/*
-		const { error: dbError } = await supabase.from('inquiries').insert({
-			name,
-			email,
-			message,
-			tour_id,
-			phone_number,
-			preferred_date
-		});
-
-		if (dbError) {
-			console.error('Supabase error:', dbError);
-			return fail(500, { error: 'Could not save inquiry. Please try again.' });
-		}
+		
 		*/
 
 		// --- Send email via Resend ---
