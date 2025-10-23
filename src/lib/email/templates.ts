@@ -1,3 +1,5 @@
+import { number } from 'zod';
+
 // src/lib/email/templates.ts
 export function tourInquiryEmail(data: {
 	name: string;
@@ -5,7 +7,7 @@ export function tourInquiryEmail(data: {
 	phone_number: string;
 	preferred_date: string;
 	message: string;
-	tour_id: string;
+	tour_id: string | number;
 }) {
 	const escape = (text: string) => {
 		const map: Record<string, string> = {

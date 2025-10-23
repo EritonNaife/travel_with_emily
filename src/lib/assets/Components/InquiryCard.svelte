@@ -56,64 +56,89 @@
 	<label class="label mb-4">
 		<span class="label-text font-bold text-primary-600">Full Name</span>
 		<input
-			name="fullName"
+			name="name"
 			class="input rounded-xl border-secondary-400 text-primary-900 placeholder:text-sm placeholder:text-secondary-800 focus:outline-1 focus:outline-primary-500"
 			type="text"
 			placeholder="Carla Maria"
 			required
 			disabled={isSubmitting}
+			value={form?.data?.name ?? ''}
 		/>
+		{#if form?.errors?.name}
+			<p class="mt-1 text-sm text-red-600">❌ {form.errors.name[0]}</p>
+		{/if}
 	</label>
 
 	<label class="label mb-4">
 		<span class="label-text font-bold text-primary-600">Email</span>
 		<input
-			name="mail"
+			name="email"
 			class="input rounded-xl border-secondary-400 text-primary-900 placeholder:text-sm placeholder:text-secondary-800 focus:outline-1 focus:outline-primary-500"
 			type="email"
 			placeholder="mail@email.com"
 			required
 			disabled={isSubmitting}
+			value={form?.data?.email ?? ''}
 		/>
+		{#if form?.errors?.email}
+			<p class="mt-1 text-sm text-red-600">❌ {form.errors.email[0]}</p>
+		{/if}
 	</label>
 
 	<label class="label mb-4">
 		<span class="label-text font-bold text-primary-600">Phone Number</span>
 		<input
-			name="phoneNumber"
+			name="phone_number"
 			class="input rounded-xl border-secondary-400 text-primary-900 placeholder:text-sm placeholder:text-secondary-800 focus:outline-1 focus:outline-primary-500"
 			type="tel"
 			placeholder="+351912345678"
 			required
 			disabled={isSubmitting}
+			value={form?.data?.phone_number ?? ''}
 		/>
+		{#if form?.errors?.phone_number}
+			<p class="mt-1 text-sm text-red-600">❌ {form.errors.phone_number[0]}</p>
+		{/if}
 	</label>
 
 	<label class="label mb-4">
 		<span class="label-text font-bold text-primary-600">Preferred Date</span>
 		<input
-			name="date"
+			name="preferred_date"
 			class="input rounded-xl border-secondary-400 text-primary-900 placeholder:text-sm placeholder:text-secondary-800 focus:outline-1 focus:outline-primary-500"
 			type="date"
 			required
 			disabled={isSubmitting}
+			value={form?.data?.preferred_date ?? ''}
+			min={new Date().toISOString().split('T')[0]}
 		/>
+		{#if form?.errors?.preferred_date}
+			<p class="mt-1 text-sm text-red-600">❌ {form.errors.preferred_date[0]}</p>
+		{/if}
 	</label>
 
 	<label class="label mb-4">
 		<span class="label-text font-bold text-primary-600">Message</span>
 		<textarea
-			required
 			name="message"
 			class="input rounded-xl border-secondary-400 text-primary-900 placeholder:text-sm placeholder:text-secondary-800 focus:outline-1 focus:outline-primary-500"
 			rows="5"
 			placeholder="Tell us more about your inquiry..."
 			disabled={isSubmitting}
+			value={form?.data?.message ?? ''}
 		></textarea>
+		{#if form?.errors?.message}
+			<p class="mt-1 text-sm text-red-600">❌ {form.errors.message[0]}</p>
+		{/if}
 	</label>
 
-	{#if form?.error}
-		<p class="mb-4 text-sm text-red-600">❌ {form.error}</p>
+	<!-- Display general form errors -->
+	{#if form?.errors?._form}
+		<div class="mb-4 rounded-lg bg-red-50 p-3 text-sm text-red-600">
+			{#each form.errors._form as error}
+				<p>❌ {error}</p>
+			{/each}
+		</div>
 	{/if}
 
 	<button

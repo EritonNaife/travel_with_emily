@@ -4,6 +4,8 @@ import { supabase } from '$lib/supabaseClient';
 import { error, fail } from '@sveltejs/kit';
 import { tourInquiryEmail } from '$lib/email/templates';
 import { resend } from '$lib/email/resend';
+import { inquirySchema } from '$lib/zod/schema';
+import { da } from 'zod/locales';
 
 export const load: PageServerLoad = async () => {
 	const [tourRes, packagesRes] = await Promise.all([
@@ -20,25 +22,43 @@ export const load: PageServerLoad = async () => {
 export const actions: Actions = {
 	inquiry: async ({ request }) => {
 		const formData = await request.formData();
+		const data = Object.fromEntries(formData);
+		const result = inquirySchema.safeParse(data);
 
-		const name = formData.get('fullName')?.toString().trim();
-		const email = formData.get('mail')?.toString().trim();
-		const phone_number = formData.get('phoneNumber')?.toString().trim();
-		const preferred_date = formData.get('date')?.toString().trim();
-		const message = formData.get('message')?.toString().trim();
-		const tour_id = formData.get('tour_id')?.toString().trim();
-
-		// --- Validation ---
-		if (!name || !email || !phone_number || !preferred_date || !message || !tour_id) {
-			return fail(400, { error: 'All fields are required.' });
+		if (!result.success) {
+			const errors = result.error.flatten().fieldErrors;
+			return fail(400, {
+				data: data,
+				errors: errors
+			});
 		}
 
-		const phoneRegex = /^(?:\+351)?\s?(9[1236]\d{7})$/;
-		if (!phoneRegex.test(phone_number)) {
-			return fail(400, { error: 'Invalid Portuguese phone number.' });
+		const { name, email, message, tour_id, phone_number, preferred_date } = result.data;
+
+		try {
+			console.log('Received validated data:', result.data);
+			await resend.emails.send({
+				from: 'onboarding@resend.dev',
+				to: 'delivered@resend.dev',
+				subject: `New Tour Inquiry`,
+				html: tourInquiryEmail({ name, email, phone_number, preferred_date, message, tour_id })
+			});
+			return { success: true, message: 'Your inquiry has been submitted succefully!' };
+		} catch (error) {
+			console.error('Error:', error);
+
+			return fail(500, {
+				data,
+				errors: { _form: ['An error ocurred please try again'] }
+			});
 		}
 
-		console.log('📩 Received inquiry', {
+		// --- Optional: store inquiry in Supabase ---
+		/*
+
+		console.log('📩 Received inquiry:', {
+			
+
 			name,
 			email,
 			phone_number,
@@ -47,16 +67,10 @@ export const actions: Actions = {
 			tour_id
 		});
 
-		// --- Optional: store inquiry in Supabase ---
-		/*
-		
-		*/
-
-		// --- Send email via Resend ---
 		try {
 			const { data, error: emailError } = await resend.emails.send({
-				from: 'onboarding@resend.dev', // Must be verified in Resend
-				to: 'delivered@resend.dev', // Replace with your real destination email
+				from: 'onboarding@resend.dev',
+				to: 'delivered@resend.dev', 
 				subject: `New Tour Inquiry`,
 				html: tourInquiryEmail({
 					name,
@@ -79,5 +93,9 @@ export const actions: Actions = {
 			console.error('Unexpected error sending email:', err);
 			return fail(500, { error: 'An unexpected error occurred while sending your inquiry.' });
 		}
+		
+		*/
+
+		return { success: true };
 	}
 };
