@@ -251,7 +251,4 @@
 			box-shadow: 0 0 10px 10px rgba(255, 107, 53, 0);
 		}
 	}
-	.animate-pulse-slow {
-		animation: pulse-slow 5s infinite;
-	}
 </style>
