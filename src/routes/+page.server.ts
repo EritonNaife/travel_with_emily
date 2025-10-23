@@ -38,7 +38,7 @@ export const actions: Actions = {
 			return fail(400, { error: 'Invalid Portuguese phone number.' });
 		}
 
-		console.log('📩 Received inquiry:', {
+		console.log('📩 Received inquiry', {
 			name,
 			email,
 			phone_number,
@@ -49,19 +49,7 @@ export const actions: Actions = {
 
 		// --- Optional: store inquiry in Supabase ---
 		/*
-		const { error: dbError } = await supabase.from('inquiries').insert({
-			name,
-			email,
-			message,
-			tour_id,
-			phone_number,
-			preferred_date
-		});
-
-		if (dbError) {
-			console.error('Supabase error:', dbError);
-			return fail(500, { error: 'Could not save inquiry. Please try again.' });
-		}
+		
 		*/
 
 		// --- Send email via Resend ---
