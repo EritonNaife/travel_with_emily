@@ -2,6 +2,8 @@
 @import '@skeletonlabs/skeleton';
 @import '@skeletonlabs/skeleton-svelte';
 @import '@skeletonlabs/skeleton/themes/cerberus';
+@import '@fontsource/montserrat';
+@import '@fontsource/playfair-display';
 @import '../theme.css';
 
 @plugin '@tailwindcss/typography';

@@ -1,7 +1,8 @@
 // src/routes/.../+page.server.ts
 import type { PageServerLoad, Actions } from './$types';
 import { supabase } from '$lib/supabaseClient';
-import { fail } from '@sveltejs/kit';
+import { error, fail } from '@sveltejs/kit';
+import { resend } from '$lib/email/resend';
 
 export const load: PageServerLoad = async () => {
 	const [tourRes, packagesRes] = await Promise.all([
@@ -31,14 +32,12 @@ export const actions: Actions = {
 			return fail(400, { error: 'All fields are required.' });
 		}
 
-		// Portuguese phone number validation
 		const phoneRegex = /^(?:\+351)?\s?(9[1236]\d{7})$/;
 		if (!phoneRegex.test(phone_number)) {
 			return fail(400, { error: 'Invalid Portuguese phone number.' });
 		}
 
-		// --- Log the clean data ---
-		console.log('✅ Clean form data:', {
+		console.log('📩 Received inquiry:', {
 			name,
 			email,
 			phone_number,
@@ -47,7 +46,49 @@ export const actions: Actions = {
 			tour_id
 		});
 
-		// Return this so the Svelte page receives form.success = true
-		return { success: true, message: 'Form validated and logged (no DB insert).' };
+		// --- Optional: store inquiry in Supabase ---
+		/*
+		const { error: dbError } = await supabase.from('inquiries').insert({
+			name,
+			email,
+			message,
+			tour_id,
+			phone_number,
+			preferred_date
+		});
+
+		if (dbError) {
+			console.error('Supabase error:', dbError);
+			return fail(500, { error: 'Could not save inquiry. Please try again.' });
+		}
+		*/
+
+		// --- Send email via Resend ---
+		try {
+			const { data, error: emailError } = await resend.emails.send({
+				from: 'onboarding@resend.dev', // Must be verified in Resend
+				to: ['delivered@resend.dev'], // Replace with your real destination email
+				subject: `New Tour Inquiry`,
+				html: `
+					<h2>New Tour Inquiry</h2>
+					<p><strong>Name:</strong> ${name}</p>
+					<p><strong>Email:</strong> ${email}</p>
+					<p><strong>Phone:</strong> ${phone_number}</p>
+					<p><strong>Preferred Date:</strong> ${preferred_date}</p>
+					<p><strong>Message:</strong> ${message}</p>
+				`
+			});
+
+			if (emailError) {
+				console.error('Resend email error:', emailError);
+				return fail(500, { error: 'Failed to send email. Please try again.' });
+			}
+
+			console.log('✅ Email sent via Resend:', data);
+			return { success: true, message: 'Your inquiry has been submitted!' };
+		} catch (err) {
+			console.error('Unexpected error sending email:', err);
+			return fail(500, { error: 'An unexpected error occurred while sending your inquiry.' });
+		}
 	}
 };
