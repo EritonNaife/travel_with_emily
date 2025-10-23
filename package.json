@@ -43,6 +43,7 @@
 		"@fontsource/playfair-display": "^5.2.8",
 		"@supabase/supabase-js": "^2.75.1",
 		"resend": "^6.2.1",
-		"svelte-inview": "^4.0.4"
+		"svelte-inview": "^4.0.4",
+		"zod": "^4.1.12"
 	}
 }
