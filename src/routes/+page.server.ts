@@ -3,7 +3,10 @@ import type { PageServerLoad, Actions } from './$types';
 import { supabase } from '$lib/supabaseClient';
 import { error, fail } from '@sveltejs/kit';
 import { tourInquiryEmail } from '$lib/email/templates';
-import { resend } from '$lib/email/resend';
+import { Resend } from 'resend';
+import { RESEND_API_KEY } from '$env/static/private';
+
+export const resend = new Resend(RESEND_API_KEY);
 
 export const load: PageServerLoad = async () => {
 	const [tourRes, packagesRes] = await Promise.all([
