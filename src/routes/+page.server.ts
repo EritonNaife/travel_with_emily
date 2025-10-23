@@ -1,14 +1,9 @@
 // src/routes/.../+page.server.ts
 import type { PageServerLoad, Actions } from './$types';
-import { createClient } from '@supabase/supabase-js';
-import { PUBLIC_SUPABASE_ANON_KEY, PUBLIC_SUPABASE_URL } from '$env/static/public';
+import { supabase } from '$lib/supabaseClient';
 import { error, fail } from '@sveltejs/kit';
 import { tourInquiryEmail } from '$lib/email/templates';
-import { Resend } from 'resend';
-import { RESEND_API_KEY } from '$env/static/private';
-
-export const resend = new Resend(RESEND_API_KEY);
-export const supabase = createClient(PUBLIC_SUPABASE_URL, PUBLIC_SUPABASE_ANON_KEY);
+import { resend } from '$lib/email/resend';
 
 export const load: PageServerLoad = async () => {
 	const [tourRes, packagesRes] = await Promise.all([
