@@ -39,7 +39,8 @@ export const actions: Actions = {
 
 		const { name, email, message, tour_id, phone_number, preferred_date } = result.data;
 
-		const sanitizedMessage = purify.sanitize(message);
+		const sanitizedMessage = purify.sanitize(message); // sanitized message for when admin dashboard is ready
+
 		try {
 			console.log('Received validated data:', result.data);
 
