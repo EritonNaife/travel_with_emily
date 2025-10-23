@@ -2,6 +2,7 @@
 import type { PageServerLoad, Actions } from './$types';
 import { supabase } from '$lib/supabaseClient';
 import { error, fail } from '@sveltejs/kit';
+import { tourInquiryEmail } from '$lib/email/templates';
 import { resend } from '$lib/email/resend';
 
 export const load: PageServerLoad = async () => {
@@ -67,16 +68,16 @@ export const actions: Actions = {
 		try {
 			const { data, error: emailError } = await resend.emails.send({
 				from: 'onboarding@resend.dev', // Must be verified in Resend
-				to: ['delivered@resend.dev'], // Replace with your real destination email
+				to: 'delivered@resend.dev', // Replace with your real destination email
 				subject: `New Tour Inquiry`,
-				html: `
-					<h2>New Tour Inquiry</h2>
-					<p><strong>Name:</strong> ${name}</p>
-					<p><strong>Email:</strong> ${email}</p>
-					<p><strong>Phone:</strong> ${phone_number}</p>
-					<p><strong>Preferred Date:</strong> ${preferred_date}</p>
-					<p><strong>Message:</strong> ${message}</p>
-				`
+				html: tourInquiryEmail({
+					name,
+					email,
+					phone_number,
+					preferred_date,
+					message,
+					tour_id
+				})
 			});
 
 			if (emailError) {
