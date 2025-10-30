@@ -16,7 +16,7 @@
 	</div>
 
 	<!-- Main -->
-	<main class="">
+	<main class="bg-surface-600">
 		<slot />
 	</main>
 	<Footer />

@@ -1,6 +1,5 @@
 <script lang="ts">
 	import { browser } from '$app/environment';
-	import BookCard from '$lib/assets/Components/BookCard.svelte';
 	import { onMount } from 'svelte';
 	import { quintOut } from 'svelte/easing';
 	import { fly, scale } from 'svelte/transition';
@@ -36,8 +35,7 @@
 </script>
 
 <div
-	class="h-130 w-full overflow-hidden card rounded-3xl shadow-lg transition-transform md:w-[48vw] md:rotate-5 lg:w-[30vw]"
-	in:fly={{ y: 50, duration: 800, delay: 6000, easing: quintOut }}
+	class="mb-10 h-120 w-110 overflow-hidden card rounded-3xl shadow-lg md:h-105 md:w-95 lg:h-130 lg:w-120"
 >
 	<header class="relative h-full">
 		<img src={imageSrc} alt={title} class="h-full w-full object-cover" />
@@ -51,22 +49,13 @@
 			</p>
 
 			<div class="flex justify-center">
-				<button
-					on:click={toggleBookCard}
+				<a
+					href="#"
 					class="mt-3 inline-block rounded-xl border border-surface-100/50 px-5 py-2 text-sm font-medium text-white backdrop-blur-sm transition hover:bg-surface-50/10"
 				>
 					Explore Package
-				</button>
+				</a>
 			</div>
 		</div>
 	</header>
 </div>
-
-{#if showBookCard}
-	<div class="fixed inset-0 z-50 flex items-center justify-center">
-		<div class="absolute inset-0 bg-black/40" on:click={toggleBookCard}></div>
-		<div class="" in:scale={{ duration: 600, delay: 100 }} out:scale={{ duration: 500 }}>
-			<BookCard {title} {price} show={toggleBookCard} />
-		</div>
-	</div>
-{/if}
