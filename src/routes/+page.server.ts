@@ -36,6 +36,12 @@ export const actions: Actions = {
 
 		try {
 			console.log('Received validated data:', result.data);
+			await resend.emails.send({
+				from: 'onboarding@resend.dev',
+				to: 'delivered@resend.dev',
+				subject: `New Tour Inquiry`,
+				html: tourInquiryEmail({ name, email, phone_number, preferred_date, message, tour_id })
+			});
 
 			return { success: true, message: 'Your inquiry has been submitted succefully!' };
 		} catch (error) {
@@ -50,12 +56,7 @@ export const actions: Actions = {
 		// --- Optional: store inquiry in Supabase ---
 		/*
 
-		await resend.emails.send({
-				from: 'onboarding@resend.dev',
-				to: 'delivered@resend.dev',
-				subject: `New Tour Inquiry`,
-				html: tourInquiryEmail({ name, email, phone_number, preferred_date, message, tour_id })
-			});
+		
 		*/
 
 		return { success: true };
